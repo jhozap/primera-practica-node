@@ -3,8 +3,6 @@ const express = require('express');
 // añadimos la configuracion de la variable de entorno
 require('dotenv').config();
 
-console.log(process.env);
-
 /** Crear Servidor Express */
 const app = express();
 
