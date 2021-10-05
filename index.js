@@ -2,9 +2,14 @@
 const express = require('express');
 // añadimos la configuracion de la variable de entorno
 require('dotenv').config();
+const { dbConnection } = require('./database/config');
 
 /** Crear Servidor Express */
 const app = express();
+
+/** Base de datos */
+dbConnection();
+
 
 /**Directorio publico */
 /** el use es un middleware: funcion que se ejecuta siempre que  alguien hace una peticion a mi servidor*/
