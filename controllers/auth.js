@@ -91,9 +91,13 @@ const loginUsuario = async (req, resp = response) => {
 }
 
 const revalidarToken = (req, resp = response) => {
+
+
+    const uid = req.uid;
+
     resp.json({
         ok: true,
-        msg: 'renew'
+        msg: uid
     });
 }
 
