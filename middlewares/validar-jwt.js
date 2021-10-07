@@ -4,8 +4,13 @@ const jwt = require('jsonwebtoken');
 const validarJWT = (req, res = response, next) => {
 
     /**x-token headers */
-
     const token = req.header('x-token');
+
+    /**Bearer token Authorization */
+    // let token = '';
+    // token = req.headers['x-access-token'] || req.headers['authorization'];
+
+    // console.log(token);
 
     if(!token) {
         return res.status(401).json({
@@ -14,7 +19,11 @@ const validarJWT = (req, res = response, next) => {
         });
     }
 
-    // console.log(token);
+    if(token.startsWith('Bearer ')) {
+        token = token.slice(7, token.lenth);
+    }
+
+    console.log(token);
 
     try {
         
