@@ -6,7 +6,8 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth');
+const { crearUsuario, loginUsuario, revalidarToken, validarUsuarioGoogle } = require('../controllers/auth');
+const { validarGoogleAuth } = require('../middlewares/validar-google-auth');
 const router = Router();
 
 
@@ -30,6 +31,8 @@ router.post(
     loginUsuario);
 
 router.get('/renew', validarJWT, revalidarToken);
+
+router.post('/google/login', validarGoogleAuth, validarUsuarioGoogle);
 
 // exportar las rutas configuradas
 module.exports = router;

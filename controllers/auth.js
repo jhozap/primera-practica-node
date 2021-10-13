@@ -104,8 +104,16 @@ const revalidarToken = async (req, resp = response) => {
     });
 }
 
+const validarUsuarioGoogle = (req, resp = response) => {
+    resp.json({
+        ok: true,
+        msg: 'validar usuario logueado con google'
+    });
+}
+
 module.exports = {
     crearUsuario,
     loginUsuario,
-    revalidarToken
+    revalidarToken,
+    validarUsuarioGoogle
 };
