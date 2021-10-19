@@ -30,6 +30,6 @@ app.use('/api/productos', require('./routes/productos'));
 
 /** Escuchar las peticiones */
 
-app.listen(process.env.Port, () => {
-    console.log(`Servidor corriendo en el puerto ${ process.env.Port }`)
+app.listen(process.env.PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${ process.env.PORT }`)
 })
