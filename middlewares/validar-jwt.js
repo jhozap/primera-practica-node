@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 const validarJWT = (req, res = response, next) => {
 
     /**x-token headers */
-    const token = req.header('x-token');
+    // const token = req.header('x-token');
 
     /**Bearer token Authorization */
-    // let token = '';
-    // token = req.headers['x-access-token'] || req.headers['authorization'];
+    let token = '';
+    token = req.headers['x-access-token'] || req.headers['authorization'];
 
     // console.log(token);
 

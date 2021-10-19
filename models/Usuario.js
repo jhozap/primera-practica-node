@@ -10,9 +10,18 @@ const UsuarioSchema = Schema({
         required: true,
         unique: true
     },
+    rol: {
+        type: Schema.Types.ObjectId,
+        ref: 'Rol',
+        default: '6168cb1bbd066a7dde2a51b2',
+        required: true
+    },
     password: {
         type: String,
         required: true
+    },
+    idToken: {
+        type: String
     }
 }, );
 

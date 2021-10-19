@@ -1,5 +1,6 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
+const Rol = require('../models/Rol');
 const Usuario = require('../models/Usuario');
 const { generarJWT } = require('../helpers/jwt');
 
@@ -104,11 +105,56 @@ const revalidarToken = async (req, resp = response) => {
     });
 }
 
-const validarUsuarioGoogle = (req, resp = response) => {
-    resp.json({
-        ok: true,
-        msg: 'validar usuario logueado con google'
-    });
+const validarUsuarioGoogle = async (req, resp = response) => {
+    const { uid, name, email } = req;
+
+    try {
+        /**Confirmar email */
+        let usuario = await Usuario.findOne({ email, idToken: uid })
+                                    .populate('rol');
+
+        if(usuario) {
+
+            console.log(usuario);
+
+            if(usuario.rol.name === 'Indefinido') {
+                
+                resp.status(401).json({
+                    ok: false,
+                    msg: 'El usuario aun no ha sido autorizado por el administrador'
+                });
+            } else {
+                
+                /**Generar Token */
+                const token = await generarJWT(usuario.id, usuario.name);
+
+                resp.json({
+                    ok: true,
+                    msg: 'Ok',
+                    uid: usuario.id,
+                    name: usuario.name,
+                    token
+                });
+            }            
+        } else {
+            usuario = new Usuario({name, email, password: uid, idToken: uid});
+            
+            const newUser = await usuario.save();
+            resp.status(201).json({
+                ok: true,
+                msg: 'Usuario creado de manera exitosa, para poder acceder comuniquese con el administrador',
+                uid: usuario.id,
+                name: usuario.name
+            });
+        }
+       
+    } catch (error) {
+        console.log(error)
+        resp.status(500).json({
+            ok: false,
+            msg: 'error al autenticar',
+        });
+    }
 }
 
 module.exports = {

@@ -13,7 +13,7 @@ const getProductos = async (req, resp = response) => {
     //                                 .populate('category');
 
     const productos = await Producto.find()
-                                    .populate('category', 'name');
+                                    .populate('category', 'name');    
 
     resp.status(200).json({
         ok: true,
